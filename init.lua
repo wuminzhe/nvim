@@ -121,8 +121,10 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- paste multitimes
--- vim.keymap.set({'n', 'v'}, 'p', 'pgvy')
+-- paste multitimes in visual mode
+-- https://vi.stackexchange.com/questions/37249/stop-vim-from-yanking-visual-selected-text
+-- https://stackoverflow.com/questions/3776117/what-is-the-difference-between-the-remap-noremap-nnoremap-and-vnoremap-mapping
+vim.keymap.set('x', 'p', 'pgvy')
 
 vim.keymap.set('n', '<C-h>', '<C-w>h', {})
 vim.keymap.set('n', '<C-j>', '<C-w>j', {})
@@ -447,5 +449,6 @@ require("toggleterm").setup {
 }
 
 require('glow').setup({
-  style = "dark"
+  style = "dark",
+  width = 300,
 })
