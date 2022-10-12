@@ -16,8 +16,9 @@ require('packer').startup(function(use)
   use 'numToStr/Comment.nvim'                                                     -- "gc" to comment visual regions/lines
   use 'nvim-treesitter/nvim-treesitter'                                           -- Highlight, edit, and navigate code
   use 'nvim-treesitter/nvim-treesitter-textobjects'                               -- Additional textobjects for treesitter
+  use 'williamboman/mason.nvim'
+  use 'williamboman/mason-lspconfig.nvim'
   use 'neovim/nvim-lspconfig'                                                     -- Collection of configurations for built-in LSP client
-  use 'williamboman/nvim-lsp-installer'                                           -- Automatically install language servers to stdpath
   use { 'hrsh7th/nvim-cmp', requires = { 'hrsh7th/cmp-nvim-lsp' } }               -- Autocompletion
   use { 'L3MON4D3/LuaSnip', requires = { 'saadparwaiz1/cmp_luasnip' } }           -- Snippet Engine and Snippet Expansion
   use 'mjlbach/onedark.nvim'                                                      -- Theme inspired by Atom
@@ -340,20 +341,20 @@ end
 -- nvim-cmp supports additional completion capabilities
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
--- Enable the following language servers
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'solargraph' }
-
--- Ensure the servers above are installed
-require('nvim-lsp-installer').setup {
-  ensure_installed = servers,
-}
-
-for _, lsp in ipairs(servers) do
-  require('lspconfig')[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
-end
+-- mason
+require('mason').setup()
+-- williamboman/mason-lspconfig.nvim
+require("mason-lspconfig").setup({
+    ensure_installed = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'solargraph' }
+})
+require("mason-lspconfig").setup_handlers({
+  function (server_name) -- default handler (optional)
+    require("lspconfig")[server_name].setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
+  end
+})
 
 -- Example custom configuration for lua
 --
