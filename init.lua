@@ -9,28 +9,28 @@ end
 
 -- stylua: ignore start
 require('packer').startup(function(use)
-  use 'wbthomason/packer.nvim'                                                    -- Package manager
-  use 'tpope/vim-fugitive'                                                        -- Git commands in nvim
-  use 'tpope/vim-rhubarb'                                                         -- Fugitive-companion to interact with github
-  use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }       -- Add git related info in the signs columns and popups
-  use 'numToStr/Comment.nvim'                                                     -- "gc" to comment visual regions/lines
-  use 'nvim-treesitter/nvim-treesitter'                                           -- Highlight, edit, and navigate code
-  use 'nvim-treesitter/nvim-treesitter-textobjects'                               -- Additional textobjects for treesitter
+  use 'wbthomason/packer.nvim' -- Package manager
+  use 'tpope/vim-fugitive' -- Git commands in nvim
+  use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
+  use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } } -- Add git related info in the signs columns and popups
+  use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
+  use 'nvim-treesitter/nvim-treesitter' -- Highlight, edit, and navigate code
+  use 'nvim-treesitter/nvim-treesitter-textobjects' -- Additional textobjects for treesitter
   use 'williamboman/mason.nvim'
   use 'williamboman/mason-lspconfig.nvim'
-  use 'neovim/nvim-lspconfig'                                                     -- Collection of configurations for built-in LSP client
-  use { 'hrsh7th/nvim-cmp', requires = { 'hrsh7th/cmp-nvim-lsp' } }               -- Autocompletion
-  use { 'L3MON4D3/LuaSnip', requires = { 'saadparwaiz1/cmp_luasnip' } }           -- Snippet Engine and Snippet Expansion
-  use 'mjlbach/onedark.nvim'                                                      -- Theme inspired by Atom
-  use 'nvim-lualine/lualine.nvim'                                                 -- Fancier statusline
-  use 'lukas-reineke/indent-blankline.nvim'                                       -- Add indentation guides even on blank lines
-  use 'tpope/vim-sleuth'                                                          -- Detect tabstop and shiftwidth automatically
+  use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
+  use { 'hrsh7th/nvim-cmp', requires = { 'hrsh7th/cmp-nvim-lsp' } } -- Autocompletion
+  use { 'L3MON4D3/LuaSnip', requires = { 'saadparwaiz1/cmp_luasnip' } } -- Snippet Engine and Snippet Expansion
+  use 'mjlbach/onedark.nvim' -- Theme inspired by Atom
+  use 'nvim-lualine/lualine.nvim' -- Fancier statusline
+  use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
+  use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } } -- Fuzzy Finder (files, lsp, etc)
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable "make" == 1 }
 
-  use { "tpope/vim-vinegar" }                                                       --  Enhances Netrw to have a project drawer style experience
+  use { "tpope/vim-vinegar" } --  Enhances Netrw to have a project drawer style experience
   use { "akinsho/toggleterm.nvim", tag = '*' }
   use { "ellisonleao/glow.nvim" }
   use { "RRethy/nvim-treesitter-endwise" }
@@ -313,7 +313,7 @@ local on_attach = function(_, bufnr)
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-  nmap('<leader>ft', vim.lsp.buf.formatting, '[f]ormat')
+  nmap('<leader>ft', vim.lsp.buf.format, '[f]ormat')
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
@@ -335,7 +335,8 @@ local on_attach = function(_, bufnr)
   end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', vim.lsp.buf.format or vim.lsp.buf.formatting, { desc = 'Format current buffer with LSP' })
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', vim.lsp.buf.format,
+    { desc = 'Format current buffer with LSP' })
 end
 
 -- nvim-cmp supports additional completion capabilities
@@ -345,10 +346,10 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 require('mason').setup()
 -- williamboman/mason-lspconfig.nvim
 require("mason-lspconfig").setup({
-    ensure_installed = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'solargraph' }
+  ensure_installed = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'solargraph' }
 })
 require("mason-lspconfig").setup_handlers({
-  function (server_name) -- default handler (optional)
+  function(server_name) -- default handler (optional)
     require("lspconfig")[server_name].setup {
       on_attach = on_attach,
       capabilities = capabilities,
@@ -441,7 +442,7 @@ require("toggleterm").setup {
   end,
   open_mapping = [[<c-\>]],
   on_open = function()
-    local opts = {buffer = 0}
+    local opts = { buffer = 0 }
     vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
     vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
   end,
