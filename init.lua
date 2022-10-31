@@ -34,6 +34,12 @@ require('packer').startup(function(use)
   use { "akinsho/toggleterm.nvim", tag = '*' }
   use { "ellisonleao/glow.nvim" }
   use { "RRethy/nvim-treesitter-endwise" }
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    }
+  }
 
   if is_bootstrap then
     require('packer').sync()
@@ -340,7 +346,7 @@ local on_attach = function(_, bufnr)
 end
 
 -- nvim-cmp supports additional completion capabilities
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- mason
 require('mason').setup()
@@ -454,3 +460,12 @@ require('glow').setup({
   style = "dark",
   width = 300,
 })
+
+-- tree.nvim
+-- disable netrw at the very start of your init.lua (strongly advised)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
+-- empty setup using defaults
+require("nvim-tree").setup()
