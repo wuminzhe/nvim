@@ -467,5 +467,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
+vim.keymap.set('n', '<leader>nt', '<Cmd>NvimTreeToggle<CR>', { silent = true })
+vim.keymap.set('n', '<leader>nf', '<Cmd>NvimTreeFindFile<CR>', { silent = true })
 -- empty setup using defaults
 require("nvim-tree").setup()
