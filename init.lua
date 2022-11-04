@@ -319,7 +319,7 @@ local on_attach = function(_, bufnr)
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-  nmap('<leader>ft', vim.lsp.buf.format, '[f]ormat')
+  nmap('<leader>F', vim.lsp.buf.format, '[f]ormat')
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
@@ -462,12 +462,14 @@ require('glow').setup({
 })
 
 -- tree.nvim
--- disable netrw at the very start of your init.lua (strongly advised)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 vim.keymap.set('n', '<leader>nt', '<Cmd>NvimTreeToggle<CR>', { silent = true })
 vim.keymap.set('n', '<leader>nf', '<Cmd>NvimTreeFindFile<CR>', { silent = true })
 -- empty setup using defaults
-require("nvim-tree").setup()
+require("nvim-tree").setup({
+  disable_netrw = true,
+  git = {
+    ignore = false,
+  }
+})
