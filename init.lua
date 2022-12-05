@@ -40,6 +40,7 @@ require('packer').startup(function(use)
       'nvim-tree/nvim-web-devicons', -- optional, for file icons
     }
   }
+  use { 'ggandor/leap.nvim' }
 
   if is_bootstrap then
     require('packer').sync()
@@ -473,3 +474,6 @@ require("nvim-tree").setup({
     ignore = false,
   }
 })
+
+-- leap.nvim
+require('leap').add_default_mappings()
